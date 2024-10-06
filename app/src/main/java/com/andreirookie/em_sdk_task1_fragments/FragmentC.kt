@@ -2,11 +2,9 @@ package com.andreirookie.em_sdk_task1_fragments
 
 import android.os.Bundle
 import android.view.View
-import android.widget.Button
 import android.widget.Toast
-import androidx.fragment.app.Fragment
 
-class FragmentC : Fragment(R.layout.fragment_layout) {
+class FragmentC : BaseFragment() {
 
     private lateinit var router: Router
 
@@ -14,17 +12,13 @@ class FragmentC : Fragment(R.layout.fragment_layout) {
         super.onViewCreated(view, savedInstanceState)
 
         router = RouterImpl.getInstance(parentFragmentManager)
+    }
 
-        view.findViewById<Button>(R.id.go_next_button).apply {
-            setOnClickListener {
-                Toast.makeText(context, "This is the last fragment", Toast.LENGTH_SHORT).show()
-            }
-        }
+    override fun setupNextButton() {
+        Toast.makeText(context, "This is the last fragment", Toast.LENGTH_SHORT).show()
+    }
 
-        view.findViewById<Button>(R.id.go_back_button).apply {
-            setOnClickListener {
-                router.navigate(NavigationType.BackFrom(fragment = this@FragmentC))
-            }
-        }
+    override fun setupBackButton() {
+        router.navigate(NavigationType.BackFrom(fragment = this@FragmentC))
     }
 }

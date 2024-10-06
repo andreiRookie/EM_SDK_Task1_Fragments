@@ -2,10 +2,8 @@ package com.andreirookie.em_sdk_task1_fragments
 
 import android.os.Bundle
 import android.view.View
-import android.widget.Button
-import androidx.fragment.app.Fragment
 
-class FragmentA : Fragment(R.layout.fragment_layout) {
+class FragmentA : BaseFragment() {
 
     private lateinit var router: Router
 
@@ -14,15 +12,13 @@ class FragmentA : Fragment(R.layout.fragment_layout) {
 
         router = RouterImpl.getInstance(parentFragmentManager)
 
-        view.findViewById<Button>(R.id.go_next_button).apply {
-            setOnClickListener {
-                router.navigate(NavigationType.Add(FragmentB()), R.id.container)
-            }
-        }
-        view.findViewById<Button>(R.id.go_back_button).apply {
-            setOnClickListener {
-                router.navigate(navType = NavigationType.BackFrom(this@FragmentA))
-            }
-        }
+    }
+
+    override fun setupNextButton() {
+        router.navigate(NavigationType.Add(FragmentB()), R.id.container)
+    }
+
+    override fun setupBackButton() {
+        router.navigate(NavigationType.BackFrom(this@FragmentA))
     }
 }
